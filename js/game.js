@@ -12,8 +12,8 @@ var player;
 	context = canvas.getContext("2d");	
 	
 	//Instantiate the Player
-	player = new GameObject(0, 300, 25, 100);
-	ball = new GameObject(canvas.width/2, canvas.height/2, 50, 50);
+	player = new GameObject(canvas.width/2, canvas.height - 50, 250, 40, "cyan");
+	ball = new GameObject(canvas.width/2, canvas.height/2, 80, 80, "magenta");
 
 	ball.vx = 5;
 	ball.vy = 5;
@@ -28,38 +28,15 @@ function animate()
 	
 	
 	//Move the Player to the right
-	/*if(d)
+	if(d)
 	{
-		console.log("Moving Right");
+		//console.log("Moving Right");
 		player.x += 2;
 	}
 	if(a)
 	{
-		console.log("Moving Left");
+		//console.log("Moving Left");
 		player.x += -2;
-	}*/
-	if(w)
-	{
-		//console.log("Moving Up");
-		if (player.y - player.height <= -50)
-		{
-			player.vy = 0;
-		}
-		else
-		{
-			player.y += -2;
-		}
-	}
-	if(s){
-		//console.log("Moving Down");
-		if (player.y + player.height >= (canvas.height + 50))
-		{
-			player.vy = 0;
-		}
-		else
-		{
-			player.y += 2;
-		}
 	}
 
 	if (ball.x + ball.width/2 >= canvas.width || ball.x - ball.width/2 <= 0)
