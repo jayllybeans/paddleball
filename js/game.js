@@ -6,8 +6,6 @@ var timer;
 //1000 ms or 1 second / FPS
 var interval = 1000/60;
 var player;
-var ball;
-var scoreCount;
 
 	//Set Up the Canvas
 	canvas = document.getElementById("canvas");
@@ -22,7 +20,7 @@ var scoreCount;
 
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
-	scoreCount = 0;
+	let scoreCount = 0;
 
 function animate()
 {
@@ -47,16 +45,21 @@ function animate()
 	if(collision)
 	{
 		scoreCount++;
+		ball.vy *= -1;
 	}
 
 	if (ball.x + ball.width/2 >= canvas.width || ball.x - ball.width/2 <= 0)
         {
-            ball.vx *= -1;
+			ball.vx *= -1;
         }
 
         if(ball.y + ball.height/2 >= canvas.height || ball.y - ball.height/2 <= 0)
         {
-            ball.vy *= -1;
+            if (ball.y + ball.height/2 >= canvas.height)
+			{
+				scoreCount = 0;
+			}
+			ball.vy *= -1;
         }
 
         ball.x += ball.vx;
