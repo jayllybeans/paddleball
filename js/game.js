@@ -22,6 +22,7 @@ var scoreCount;
 
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
+	scoreCount = 0;
 
 function animate()
 {
@@ -39,6 +40,13 @@ function animate()
 	{
 		//console.log("Moving Left");
 		player.x += -2;
+	}
+
+	let collision = player.hitTestObject(ball);
+
+	if(collision)
+	{
+		scoreCount++;
 	}
 
 	if (ball.x + ball.width/2 >= canvas.width || ball.x - ball.width/2 <= 0)
