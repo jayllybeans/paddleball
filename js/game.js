@@ -20,7 +20,6 @@ var gravity = 1;
 	ball = new GameObject(canvas.width/2, canvas.height/2, 80, 80, "magenta");
 
 	ball.vx = 5;
-	ball.vy = 5;
 
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
@@ -31,7 +30,8 @@ function animate()
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);	
 	
-	
+	showGravity();
+
 	//Move the Player to the right
 	if(d)
 	{
@@ -157,28 +157,28 @@ function showGravity()
 	
 	if(d)
 	{	
-		player.vx += player.ax * player.force;
+		ball.vx += ball.ax * ball.force;
 	}
 	if(a)
 	{
-		player.vx += player.ax * -player.force;
+		ball.vx += ball.ax * -ball.force;
 	}
-	if(w)
+	/*if(w)
 	{	
 		player.vy += player.ay * -player.force;
 	}
 	if(s)
 	{
 		player.vy += player.ay * player.force;
-	}
+	}*/
 	
 	//--------------Apply Gravity to the Velocity Y-----------------------------------------
-	player.vy += gravity;
-	player.y += player.vy;
+	ball.vy += gravity;
+	ball.y += ball.vy;
 	//---------------------------------------------------------------------------------------
 	
-	player.vx *= frictionX;
-	player.x += player.vx;
+	ball.vx *= frictionX;
+	ball.x += ball.vx;
 }
 
 function showPixelLock()
