@@ -217,37 +217,47 @@ function showBounce()
 {
 	if(d)
 	{	
-		player.vx += player.ax * player.force;
+		ball.vx += ball.ax * ball.force;
 	}
 	if(a)
 	{
-		player.vx += player.ax * -player.force;
+		ball.vx += ball.ax * -ball.force;
 	}
-	if(w)
+	/*if(w)
 	{	
 		player.vy += player.ay * -player.force;
 	}
 	if(s)
 	{
 		player.vy += player.ay * player.force;
-	}
+	}*/
 	
-	player.vy *= frictionY;
-	player.vx *= frictionX;
+	ball.vy *= frictionY;
+	ball.vx *= frictionX;
 	
-	player.vy += gravity;
+	ball.vy += gravity;
 	
-	player.x += player.vx;
-	player.y += player.vy;
+	ball.x += ball.vx;
+	ball.y += ball.vy;
 	
 	//--------------------Check Collision------------------------------------------------------
-	if(player.y > canvas.height - player.height/2)
+	if(ball.y > canvas.height - ball.height/2)
 	{
 		
 		//--------Bounce the Ball---------------------------------------------------------------
-		player.y = canvas.height - player.height/2;
+		ball.y = canvas.height - ball.height/2;
 		//the decimal is how bouncy you want the object to be
 		//It should be a number between 0 and 2;
-		player.vy = -player.vy * .99;
+		ball.vy = -ball.vy * .67;
+	}
+	if(ball.x > canvas.width - ball.width/2)
+	{
+		ball.x = canvas.width - ball.width/2;
+		ball.vx = -ball.vx * .99;
+	}
+	if(ball.x < 0)
+	{
+		ball.x = 0;
+		ball.vx = -ball.vx * .99;
 	}
 }
