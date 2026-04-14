@@ -6,6 +6,8 @@ var timer;
 //1000 ms or 1 second / FPS
 var interval = 1000/60;
 var player;
+var ball;
+var scoreCount;
 
 	//Set Up the Canvas
 	canvas = document.getElementById("canvas");
@@ -53,6 +55,10 @@ function animate()
         ball.y += ball.vy;
 
 	//Update the Screen
+	context.font = "16px Arial black";
+	context.fillStyle = "dark gray";
+	context.fillText("Score: " + scoreCount, 80, 25);
+
 	player.drawRect();
 	ball.drawCircle();
 }
