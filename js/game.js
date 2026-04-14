@@ -69,5 +69,14 @@ function animate()
 
 	player.drawRect();
 	ball.drawCircle();
+
+	context.save();
+	context.strokeStyle = "dark gray";
+	context.beginPath();
+	context.moveTo(ball.x, ball.y);
+	context.lineTo(player.x, player.y);
+	context.lineWidth = 1;
+	context.stroke();
+	context.restore();
 }
 
