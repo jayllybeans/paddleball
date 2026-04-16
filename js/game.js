@@ -31,6 +31,7 @@ function animate()
 	context.clearRect(0,0,canvas.width, canvas.height);	
 	
 	showGravity();
+	showBounce();
 
 	//Move the Player to the right
 	if(d)
@@ -112,14 +113,14 @@ function showAcceleration()
 	{
 		player.vx += player.ax * -player.force;
 	}
-	if(w)
+	/*if(w)
 	{	
 		player.vy += player.ay * -player.force;
 	}
 	if(s)
 	{
 		player.vy += player.ay * player.force;
-	}
+	}*/
 	//---------------------------------------------------------------------------------------
 	player.x += player.vx;
 	player.y += player.vy;
@@ -181,7 +182,7 @@ function showGravity()
 	ball.x += ball.vx;
 }
 
-function showPixelLock()
+/*function showPixelLock()
 {
 	
 	if(d)
@@ -211,7 +212,7 @@ function showPixelLock()
 	player.y += Math.round(player.vy);
 	player.x += Math.round(player.vx);
 	//--------------------------------------------------------------------------------------
-}
+}*/
 
 function showBounce()
 {
@@ -223,14 +224,14 @@ function showBounce()
 	{
 		ball.vx += ball.ax * -ball.force;
 	}
-	/*if(w)
+	if(w)
 	{	
-		player.vy += player.ay * -player.force;
+		ball.vy += ball.ay * -ball.force;
 	}
 	if(s)
 	{
-		player.vy += player.ay * player.force;
-	}*/
+		ball.vy += ball.ay * ball.force;
+	}
 	
 	ball.vy *= frictionY;
 	ball.vx *= frictionX;
@@ -249,15 +250,5 @@ function showBounce()
 		//the decimal is how bouncy you want the object to be
 		//It should be a number between 0 and 2;
 		ball.vy = -ball.vy * .67;
-	}
-	if(ball.x > canvas.width - ball.width/2)
-	{
-		ball.x = canvas.width - ball.width/2;
-		ball.vx = -ball.vx * .99;
-	}
-	if(ball.x < 0)
-	{
-		ball.x = 0;
-		ball.vx = -ball.vx * .99;
 	}
 }
