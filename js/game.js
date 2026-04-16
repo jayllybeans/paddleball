@@ -7,8 +7,8 @@ var timer;
 var interval = 1000/60;
 var player;
 
-var frictionX = .85;	
-var frictionY = .97;
+var frictionX = .5;	
+var frictionY = .5;
 var gravity = 1;
 
 	//Set Up the Canvas
@@ -28,10 +28,7 @@ var gravity = 1;
 function animate()
 {
 	//Erase the Screen
-	context.clearRect(0,0,canvas.width, canvas.height);	
-	
-	showGravity();
-	showBounce();
+	context.clearRect(0,0,canvas.width, canvas.height);
 
 	//Move the Player to the right
 	if(d)
@@ -43,7 +40,7 @@ function animate()
 		}
 		else
 		{
-			player.x += 2;
+			player.x += 5;
 		}
 	}
 	if(a)
@@ -55,7 +52,7 @@ function animate()
 		}
 		else
 		{
-			player.x += -2;
+			player.x += -5;
 		}
 	}
 
@@ -64,6 +61,7 @@ function animate()
 	if(collision)
 	{
 		scoreCount++;
+		player.vy = -player.vy * .67;
 		ball.vy *= -1;
 	}
 
@@ -78,9 +76,11 @@ function animate()
 			{
 				scoreCount = 0;
 			}
+			player.vy = -player.vy * .67;
 			ball.vy *= -1;
         }
 
+		ball.vy += gravity;
         ball.x += ball.vx;
         ball.y += ball.vy;
 
@@ -100,155 +100,4 @@ function animate()
 	context.lineWidth = 1;
 	context.stroke();
 	context.restore();
-}
-
-function showAcceleration()
-{
-	//--------------Use Velocity and Acceleration to move around----------------------
-	if(d)
-	{	
-		player.vx +=  player.ax * player.force;
-	}
-	if(a)
-	{
-		player.vx += player.ax * -player.force;
-	}
-	/*if(w)
-	{	
-		player.vy += player.ay * -player.force;
-	}
-	if(s)
-	{
-		player.vy += player.ay * player.force;
-	}*/
-	//---------------------------------------------------------------------------------------
-	player.x += player.vx;
-	player.y += player.vy;
-}
-
-function showFriction()
-{
-	if(d)
-	{	
-		player.vx += player.ax * player.force;
-	}
-	if(a)
-	{
-		player.vx += player.ax * -player.force;
-	}
-	if(w)
-	{	
-		player.vy += player.ay * -player.force;
-	}
-	if(s)
-	{
-		player.vy += player.ay * player.force;
-	}
-	
-	//--------------Apply friction to the Velocity X-----------------------------------------
-	player.vx *= frictionX;
-	player.vy *= frictionY;
-	//---------------------------------------------------------------------------------------
-	player.x += player.vx;
-	player.y += player.vy;
-}
-
-function showGravity()
-{
-	
-	if(d)
-	{	
-		ball.vx += ball.ax * ball.force;
-	}
-	if(a)
-	{
-		ball.vx += ball.ax * -ball.force;
-	}
-	/*if(w)
-	{	
-		player.vy += player.ay * -player.force;
-	}
-	if(s)
-	{
-		player.vy += player.ay * player.force;
-	}*/
-	
-	//--------------Apply Gravity to the Velocity Y-----------------------------------------
-	ball.vy += gravity;
-	ball.y += ball.vy;
-	//---------------------------------------------------------------------------------------
-	
-	ball.vx *= frictionX;
-	ball.x += ball.vx;
-}
-
-/*function showPixelLock()
-{
-	
-	if(d)
-	{	
-		player.vx += player.ax * player.force;
-	}
-	if(a)
-	{
-		player.vx += player.ax * -player.force;
-	}
-	if(w)
-	{	
-		player.vy += player.ay * -player.force;
-	}
-	if(s)
-	{
-		player.vy += player.ay * player.force;
-	}
-	
-
-	player.vx *= frictionX;	
-	player.vy *= frictionY;
-	
-	//------Round the velocity before applying it to the position.--------------------------
-    //------This will keep the object from moving fractions of a pixel----------------------
-	//------This might not be noticeable now, but will help alot when things get complex----
-	player.y += Math.round(player.vy);
-	player.x += Math.round(player.vx);
-	//--------------------------------------------------------------------------------------
-}*/
-
-function showBounce()
-{
-	if(d)
-	{	
-		ball.vx += ball.ax * ball.force;
-	}
-	if(a)
-	{
-		ball.vx += ball.ax * -ball.force;
-	}
-	if(w)
-	{	
-		ball.vy += ball.ay * -ball.force;
-	}
-	if(s)
-	{
-		ball.vy += ball.ay * ball.force;
-	}
-	
-	ball.vy *= frictionY;
-	ball.vx *= frictionX;
-	
-	ball.vy += gravity;
-	
-	ball.x += ball.vx;
-	ball.y += ball.vy;
-	
-	//--------------------Check Collision------------------------------------------------------
-	if(ball.y > canvas.height - ball.height/2)
-	{
-		
-		//--------Bounce the Ball---------------------------------------------------------------
-		ball.y = canvas.height - ball.height/2;
-		//the decimal is how bouncy you want the object to be
-		//It should be a number between 0 and 2;
-		ball.vy = -ball.vy * .67;
-	}
 }
