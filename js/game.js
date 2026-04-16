@@ -70,14 +70,17 @@ function animate()
 			ball.vx *= -1;
         }
 
-        if(ball.y + ball.height/2 >= canvas.height || ball.y - ball.height/2 <= 0)
+    if (ball.y + ball.height/2 >= canvas.height || ball.y - ball.height/2 <= 0)
         {
             if (ball.y + ball.height/2 >= canvas.height)
 			{
 				scoreCount = 0;
+				ball.vy = -ball.vy * .67;
 			}
-			player.vy = -player.vy * .67;
-			ball.vy *= -1;
+			else
+			{
+				ball.vy *= -1;
+			}
         }
 
 		ball.vy += gravity;
@@ -93,7 +96,7 @@ function animate()
 	ball.drawCircle();
 
 	context.save();
-	context.strokeStyle = "dark gray";
+	context.strokeStyle = "darkgray";
 	context.beginPath();
 	context.moveTo(ball.x, ball.y);
 	context.lineTo(player.x, player.y);
