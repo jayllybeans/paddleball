@@ -20,6 +20,7 @@ var gravity = 1;
 	ball = new GameObject(canvas.width/2, canvas.height/2, 80, 80, "magenta");
 
 	ball.vx = 5;
+	ball.vy = 2;
 
 	//Set the Animation Timer
 	timer = setInterval(animate, interval);
@@ -29,6 +30,8 @@ function animate()
 {
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);
+
+	ball.vx = 5;
 
 	//Move the Player to the right
 	if(d)
@@ -56,36 +59,43 @@ function animate()
 		}
 	}
 
+	ball.vy += gravity;
+	ball.x += ball.vx;
+    ball.y += ball.vy;
+
 	let collision = player.hitTestObject(ball);
 
-	if(collision)
+	if(collision && ball.vy > 0)
 	{
-		scoreCount++;
-		player.vy = -player.vy * .67;
+		ball.y = player.top() - ball.height/2; //sets the ball y to the top of the paddle on contact to stop it from phasing through after a lot of hits 
 		ball.vy *= -1;
+		scoreCount++;
 	}
 
-	if (ball.x + ball.width/2 >= canvas.width || ball.x - ball.width/2 <= 0)
+	if (ball.bottom() >= canvas.height) //checks if the bottom of the ball touches the ground; prevents phasing
         {
-			ball.vx *= -1;
+			ball.y = canvas.height - ball.height/2 //preventing the phasing
+			ball.vy = -ball.vy * .67;
+			scoreCount = 0;
         }
 
-    if (ball.y + ball.height/2 >= canvas.height || ball.y - ball.height/2 <= 0)
-        {
-            if (ball.y + ball.height/2 >= canvas.height)
-			{
-				scoreCount = 0;
-				ball.vy = -ball.vy * .67;
-			}
-			else
-			{
-				ball.vy *= -1;
-			}
-        }
+	if(ball.top() <= 0)
+	{
+		ball.y = ball.height/2;
+		ball.vy = -ball.vy * .67;
+	}
 
-		ball.vy += gravity;
-        ball.x += ball.vx;
-        ball.y += ball.vy;
+	if(ball.left() <= 0)
+	{
+		ball.x = ball.width/2;
+		ball.vx = -ball.vx * .67;
+	}
+
+	if(ball.right() >= canvas.width)
+	{
+		ball.x = canvas.width - ball.width/2;
+		ball.vx = -ball.vx * .67;
+	}
 
 	//Update the Screen
 	context.font = "16px Arial black";
@@ -96,7 +106,7 @@ function animate()
 	ball.drawCircle();
 
 	context.save();
-	context.strokeStyle = "darkgray";
+	context.strokeStyle = "dark gray";
 	context.beginPath();
 	context.moveTo(ball.x, ball.y);
 	context.lineTo(player.x, player.y);
