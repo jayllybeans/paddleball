@@ -68,6 +68,36 @@ function animate()
 	if(collision && ball.vy > 0)
 	{
 		ball.y = player.top() - ball.height/2; //sets the ball y to the top of the paddle on contact to stop it from phasing through after a lot of hits 
+		if(ball.y < player.y - player.y/3)
+		{
+			if(ball.y < player.y - player.y/6)
+			{
+				ball.vy = -35;
+				ball.vx = -ball.force * 5;
+			}
+			else
+			{
+				ball.vy = -35;
+				ball.vx = -ball.force;
+			}
+		}
+		else if(ball.y > player.y - player.y/3)
+		{
+			if(ball.y < player.y)
+			{
+				ball.vy = -35;
+				ball.vx = ball.force;	
+			}
+			else
+			{
+				ball.vy = -35;
+				ball.vx = ball.force * 5;
+			}
+		}
+		else
+		{
+			ball.vy = -35;
+		}
 		ball.vy *= -1;
 		scoreCount++;
 	}
