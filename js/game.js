@@ -33,6 +33,9 @@ function animate()
 
 	ball.vx = 5;
 
+	player.x += player.vx;
+
+
 	//Move the Player to the right
 	if(d)
 	{
@@ -43,7 +46,8 @@ function animate()
 		}
 		else
 		{
-			player.x += 5;
+			player.vx +=  player.ax * player.force;
+			player.vx *= frictionX;
 		}
 	}
 	if(a)
@@ -55,7 +59,8 @@ function animate()
 		}
 		else
 		{
-			player.x += -5;
+			player.vx += player.ax * -player.force;
+			player.vx *= frictionX;
 		}
 	}
 
