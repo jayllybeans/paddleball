@@ -32,7 +32,7 @@ function animate()
 	context.clearRect(0,0,canvas.width, canvas.height);
 
 	player.x += player.vx;
-
+	player.vx *= frictionX;
 
 	//Move the Player to the right
 	if(d)
@@ -45,7 +45,6 @@ function animate()
 		else
 		{
 			player.vx +=  player.ax * player.force;
-			player.vx *= frictionX;
 		}
 	}
 	if(a)
@@ -58,7 +57,6 @@ function animate()
 		else
 		{
 			player.vx += player.ax * -player.force;
-			player.vx *= frictionX;
 		}
 	}
 
@@ -71,35 +69,28 @@ function animate()
 	if(collision && ball.vy > 0)
 	{
 		ball.y = player.top() - ball.height/2; //sets the ball y to the top of the paddle on contact to stop it from phasing through after a lot of hits 
+		ball.vy = -35;
 		if(ball.y < player.y - player.y/3)
 		{
 			if(ball.y < player.y - player.y/6)
 			{
-				ball.vy = -35;
 				ball.vx = -ball.force * 5;
 			}
 			else
 			{
-				ball.vy = -35;
 				ball.vx = -ball.force;
 			}
 		}
-		else if(ball.y > player.y - player.y/3)
+		if(ball.y > player.y - player.y/3)
 		{
 			if(ball.y < player.y)
 			{
-				ball.vy = -35;
 				ball.vx = ball.force;	
 			}
 			else
 			{
-				ball.vy = -35;
 				ball.vx = ball.force * 5;
 			}
-		}
-		else
-		{
-			ball.vy = -35;
 		}
 		ball.vy *= .8;
 		scoreCount++;
