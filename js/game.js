@@ -19,7 +19,7 @@ var gravity = .5;
 	player = new GameObject(canvas.width/2, canvas.height - 50, 250, 40, "cyan");
 	ball = new GameObject(canvas.width/2, canvas.height/2, 80, 80, "magenta");
 
-	ball.vx = 5;
+	ball.vx = 0;
 	ball.vy = 2;
 
 	//Set the Animation Timer
@@ -28,6 +28,7 @@ var gravity = .5;
 
 function animate()
 {
+	//console.log(ball.x, player.x)
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);
 
@@ -38,7 +39,7 @@ function animate()
 	if(d)
 	{
 		//console.log("Moving Right");
-		if (player.x + player.width >= (canvas.width + 125))
+		if (player.x + player.width/2 >= canvas.width)
 		{
 			player.vx = 0;
 		}
@@ -70,9 +71,9 @@ function animate()
 	{
 		ball.y = player.top() - ball.height/2; //sets the ball y to the top of the paddle on contact to stop it from phasing through after a lot of hits 
 		ball.vy = -35;
-		if(ball.y < player.y - player.y/3)
+		if(ball.x < player.x - player.width/3)
 		{
-			if(ball.y < player.y - player.y/6)
+			if(ball.x < player.x - player.width/6)
 			{
 				ball.vx = -ball.force * 5;
 			}
@@ -81,15 +82,16 @@ function animate()
 				ball.vx = -ball.force;
 			}
 		}
-		if(ball.y > player.y - player.y/3)
+
+		if(ball.x > player.x + player.width/3)
 		{
-			if(ball.y < player.y)
+			if(ball.x < player.x + player.width/6)
 			{
-				ball.vx = ball.force;	
+				ball.vx = ball.force * 5;
 			}
 			else
 			{
-				ball.vx = ball.force * 5;
+				ball.vx = ball.force;
 			}
 		}
 		ball.vy *= .8;
