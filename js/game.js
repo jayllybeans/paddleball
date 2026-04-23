@@ -8,8 +8,8 @@ var interval = 1000/60;
 var player;
 
 var frictionX = .5;	
-var frictionY = .5;
-var gravity = 1;
+var frictionY = .3;
+var gravity = .5;
 
 	//Set Up the Canvas
 	canvas = document.getElementById("canvas");
@@ -30,8 +30,6 @@ function animate()
 {
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);
-
-	ball.vx = 5;
 
 	player.x += player.vx;
 
@@ -103,7 +101,7 @@ function animate()
 		{
 			ball.vy = -35;
 		}
-		ball.vy *= -1;
+		ball.vy *= .8;
 		scoreCount++;
 	}
 
