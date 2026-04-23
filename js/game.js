@@ -32,9 +32,6 @@ function animate()
 	//Erase the Screen
 	context.clearRect(0,0,canvas.width, canvas.height);
 
-	player.x += player.vx;
-	player.vx *= frictionX;
-
 	//Move the Player to the right
 	if(d)
 	{
@@ -48,10 +45,10 @@ function animate()
 			player.vx +=  player.ax * player.force;
 		}
 	}
-	if(a)
+	else if(a)
 	{
 		//console.log("Moving Left");
-		if(player.x - player.width <= -125)
+		if(player.x - player.width/2 <= 0)
 		{
 			player.vx = 0;
 		}
@@ -60,7 +57,12 @@ function animate()
 			player.vx += player.ax * -player.force;
 		}
 	}
+	else
+	{
+		player.vx *= frictionX;
+	}
 
+	player.x += Math.round(player.vx);
 	ball.vy += gravity;
 	ball.x += ball.vx;
     ball.y += ball.vy;
